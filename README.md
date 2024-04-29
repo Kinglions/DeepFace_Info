@@ -23,3 +23,7 @@ pip install -r requirements.txt
 python detection.py
 ```
 可以将想要解析的图片放置到 `images` 目录下
+
+# 运行效果
+
+![image](./demo.png)
