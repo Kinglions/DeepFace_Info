@@ -1,0 +1,6 @@
+requests
+
+deepface
+torch 
+torchvision
+opencv-python
