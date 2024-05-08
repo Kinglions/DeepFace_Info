@@ -20,9 +20,16 @@ opencv-python
 ```
 cd 到项目目录
 pip install -r requirements.txt
-python detection.py
 ```
-可以将想要解析的图片放置到 `images` 目录下
+
+### 方式一：直接使用 detection 进行解析
+1. 先将需要解析的图片放到 `images` 目录下
+2. 运行`python detection.py`
+
+### 方式二：通过 main 执行随机挑选后，再进行 detection 解析
+1. 先将海量的图片放到 `input` 目录下
+2. 运行`python main.py`
+    说明：main 会先执行 `copy_random_images`，对 `input` 目录下的图片随机挑选 3000 张图片，并将其复制到 `images` 目录下，同时将图片转为`jpg`格式并压缩，然后执行 `detection.py`
 
 # 运行效果
 

@@ -1,5 +1,6 @@
 requests
 
+pandas
 deepface
 torch 
 torchvision
