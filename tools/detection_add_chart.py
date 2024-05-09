@@ -60,19 +60,19 @@ def traverse_folder_images(folder):
     # 读取目录中的所有文件名，忽略隐藏文件
     files = [f for f in os.listdir(folder) if not f.startswith('.')]
     
-    # # 使用自定义的排序键进行排序
-    # files = sorted(files, key=numeric_sort_key)
-    # # 创建空的DataFrame
-    # df = pd.DataFrame(columns=['图片名称', '年龄', '性别', '肤色', '情绪', '预测结果'])
-    # for file in files:
-    #     if file.endswith(".jpg") or file.endswith(".jpeg") or file.endswith(".png"):
-    #         image_path = os.path.join(folder, file)
-    #         result = prediction.predictionPersonInfo(image_path)
-    #         if result is not None:  # 检查返回结果是否为None
-    #             (file_name, age, gender, race, emotion, predictions) = result
-    #             # 性别分类 (简单示例：男性为0，女性为1)
-    #             df = pd.concat([df, pd.DataFrame([[file_name, age, gender, race, emotion, predictions]], columns=['图片名称', '年龄', '性别', '肤色', '情绪', '预测结果'])], ignore_index=True)
-    #         else:
-    #             print(f"No valid face data to process for image {file}. Skipping...")
+    # 使用自定义的排序键进行排序
+    files = sorted(files, key=numeric_sort_key)
+    # 创建空的DataFrame
+    df = pd.DataFrame(columns=['图片名称', '年龄', '性别', '肤色', '情绪', '预测结果'])
+    for file in files:
+        if file.endswith(".jpg") or file.endswith(".jpeg") or file.endswith(".png"):
+            image_path = os.path.join(folder, file)
+            result = prediction.predictionPersonInfo(image_path)
+            if result is not None:  # 检查返回结果是否为None
+                (file_name, age, gender, race, emotion, predictions) = result
+                # 性别分类 (简单示例：男性为0，女性为1)
+                df = pd.concat([df, pd.DataFrame([[file_name, age, gender, race, emotion, predictions]], columns=['图片名称', '年龄', '性别', '肤色', '情绪', '预测结果'])], ignore_index=True)
+            else:
+                print(f"No valid face data to process for image {file}. Skipping...")
     
-    # add_chart_data(df)
+    add_chart_data(df)
