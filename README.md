@@ -24,7 +24,7 @@ pip install -r requirements.txt
 
 ### 方式一：直接使用 detection 进行解析
 1. 先将需要解析的图片放到 `images` 目录下
-2. 运行`python detection.py`
+2. 运行`python detection_add_chart.py`
 
 ### 方式二：通过 main 执行随机挑选后，再进行 detection 解析
 1. 先将海量的图片放到 `input` 目录下
