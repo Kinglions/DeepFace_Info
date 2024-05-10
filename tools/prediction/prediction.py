@@ -2,6 +2,7 @@ import cv2
 import os
 import numpy as np
 from deepface import DeepFace
+from tools import hair_eyes_color_detection as hecd
 
 def predictionPersonInfo(image_path):
     image = cv2.imread(image_path)
@@ -44,14 +45,23 @@ def predictionPersonInfo(image_path):
     except Exception as e:
         print(f"An error occurred: {e}")
         return None
-    
+    datas = hecd.extract_features(image_path)
+    print(f"---------datas: \n{datas}")
+    predictions["hair_eyes_color"] = datas
+
     age = predictions["age"]
     gender = predictions["dominant_gender"]
     race = predictions["dominant_race"]
     emotion = predictions["dominant_emotion"]
+    left_eye_color = datas["left_eye_color"]["web_color"]
+    right_eye_color = datas["right_eye_color"]["web_color"]
+    hair_color = datas["hair_color"]["web_color"]
     print("\n年龄:", age)
     print("性别:", gender)
     print("肤色:", race)
     print("情绪:", emotion)
+    print("左眼:", left_eye_color)
+    print("右眼:", right_eye_color)
+    print("发色:", hair_color)
     
-    return (file_name, age, gender, race, emotion, predictions)
+    return (file_name, age, gender, race, emotion, left_eye_color, right_eye_color, hair_color, predictions)

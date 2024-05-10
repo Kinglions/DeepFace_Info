@@ -28,7 +28,9 @@ def add_chart_data(df):
     print(f"\n------------- 正在添加图表数据 -------------")
     print(f"\n df: \n {df} \n")
     # 将 DataFrame 写入 CSV 文件
-    resultFolder = '../../results'
+    resultFolder = './results'
+    print(f'resultFolder: {resultFolder}')
+
     os.makedirs(resultFolder, exist_ok=True)
     csv_file = os.path.join(resultFolder,'result.csv')
     df.to_csv(csv_file, index=False)
@@ -42,19 +44,34 @@ def add_chart_data(df):
     print(f"年龄图表绘制中...")
     age_counts = age_counts[age_counts > 0]
     if not age_counts.empty:
-        save_pie_chart(age_counts, age_counts.index, 'Age Distribution', f'{resultFolder}/age_distribution.png')
+        save_pie_chart(age_counts, age_counts.index, 'Age Distribution', './results/age_distribution.png')
     else:
         print("没有有效的年龄段数据进行图表展示。")
     
     # 性别占比
     print(f"性别图表绘制中......")
     gender_counts = df['性别'].value_counts()
-    save_pie_chart(gender_counts, gender_counts.index, 'Gender', f'{resultFolder}/gender_distribution.png')
+    save_pie_chart(gender_counts, gender_counts.index, 'Gender', './results/gender_distribution.png')
 
     # 肤色占比
     print(f"肤色图表绘制中.........")
     race_counts = df['肤色'].value_counts()
-    save_pie_chart(race_counts, race_counts.index, 'Race', f'{resultFolder}/race_distribution.png')
+    save_pie_chart(race_counts, race_counts.index, 'Race', './results/race_distribution.png')
+
+    # 发色占比
+    print(f"发色图表绘制中.........")
+    race_counts = df['发色'].value_counts()
+    save_pie_chart(race_counts, race_counts.index, 'HairColor', './results/hair_color_distribution.png')
+    
+    # 左眼色占比
+    print(f"左眼色图表绘制中.........")
+    race_counts = df['左眼色'].value_counts()
+    save_pie_chart(race_counts, race_counts.index, 'LeftEyeColor', './results/left_eye_color_distribution.png')
+
+    # 右眼色占比
+    print(f"右眼色图表绘制中.........")
+    race_counts = df['右眼色'].value_counts()
+    save_pie_chart(race_counts, race_counts.index, 'RightEyeColor', './results/right_eye_color_distribution.png')
 
 def traverse_folder_images(folder):
     # 读取目录中的所有文件名，忽略隐藏文件
@@ -63,15 +80,15 @@ def traverse_folder_images(folder):
     # 使用自定义的排序键进行排序
     files = sorted(files, key=numeric_sort_key)
     # 创建空的DataFrame
-    df = pd.DataFrame(columns=['图片名称', '年龄', '性别', '肤色', '情绪', '预测结果'])
+    df = pd.DataFrame(columns=['图片名称', '年龄', '性别', '肤色', '发色', '左眼色', '右眼色', '情绪', '预测结果'])
     for file in files:
         if file.endswith(".jpg") or file.endswith(".jpeg") or file.endswith(".png"):
             image_path = os.path.join(folder, file)
             result = prediction.predictionPersonInfo(image_path)
             if result is not None:  # 检查返回结果是否为None
-                (file_name, age, gender, race, emotion, predictions) = result
+                (file_name, age, gender, race, hairColor, leftEyeColor, rightEyeColor, emotion, predictions) = result
                 # 性别分类 (简单示例：男性为0，女性为1)
-                df = pd.concat([df, pd.DataFrame([[file_name, age, gender, race, emotion, predictions]], columns=['图片名称', '年龄', '性别', '肤色', '情绪', '预测结果'])], ignore_index=True)
+                df = pd.concat([df, pd.DataFrame([[file_name, age, gender, race, hairColor, leftEyeColor, rightEyeColor, emotion, predictions]], columns=['图片名称', '年龄', '性别', '肤色', '发色', '左眼色', '右眼色', '情绪', '预测结果'])], ignore_index=True)
             else:
                 print(f"No valid face data to process for image {file}. Skipping...")
     
